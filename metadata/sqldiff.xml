@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+
+<sqldiff version="1.0">
+	<help>
+		USE:
+			The diffs are ordered by datamodel version number.
+			The script can be run in a top down fashion and is
+			expected to not failor overwrite old data
+		
+		EXPECT:
+			- "use business-database-name;" was called prior to
+			   calling this script
+	</help>
+	
+	<diff>
+		<version>1.0.1</version>
+		<author>Regis R</author>
+		<date>Sep 4th 2012</date>
+		<description>
+			
+		</description>
+		<sql>
+		CREATE TABLE IF NOT EXISTS `regimencomposition` (
+	   `regimen_id` int(11) NOT NULL AUTO_INCREMENT,
+	   `regimen_category` varchar(45) DEFAULT NULL,
+       `regimen_name` varchar(45) DEFAULT NULL,
+       `drug_concept_id1` int(11) DEFAULT NULL,
+       `drug_concept_id2` int(11) DEFAULT NULL,
+       `drug_concept_id3` int(11) DEFAULT NULL,
+       `drug_concept_id4` int(11) DEFAULT NULL,
+ 		PRIMARY KEY (`regimen_Id`)
+
+			) ;
+			
+	 	CREATE TABLE IF NOT EXISTS `regimencategory` (
+	   `regimen_category_id` int(11) NOT NULL AUTO_INCREMENT,
+	   `regimen_category_name` varchar(55) DEFAULT NULL,      
+ 		PRIMARY KEY (`regimen_category_id`)
+
+			) ;	
+	 
+	 
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (1,'adultRegimen');
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (2,'pediatricRegimen');
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (3,'pediatricRegimenSecondLine');
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (4,'adultRegimensSecondLine');
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (5,'prophylaxiePostExpositions'); 
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (6,'pmtctCompositions');
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (7,'PediatricSirop');
+	 insert ignore into regimencategory (regimen_category_id,regimen_category_name) values (8,'adultRegimensThirdLine');
+	  
+	  
+	  
+	 </sql>
+		
+	</diff>	
+</sqldiff>

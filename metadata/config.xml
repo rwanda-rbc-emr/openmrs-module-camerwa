@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module configVersion="1.0">
+	
+	<!-- Base Module Properties -->
+	<id>camerwa</id>
+	<name>Camerwa drug report</name>
+	<version>1.4.2</version>
+	<package>org.openmrs.module.@MODULE_ID@</package>
+	<author>Regis Rwirangira</author>
+	<description>
+			This module will control the openmrs Camerwa drug report
+	</description>
+
+	<activator>@MODULE_PACKAGE@.CamerwaActivator</activator>
+	
+	<!-- <updateURL>https://dev.openmrs.org/modules/download/@MODULE_ID@/update.rdf</updateURL> -->
+	<!-- /Base Module Properties -->
+	
+	<require_version>1.2.0.3400</require_version>
+	
+	<!-- Extensions -->
+	<extension>
+		<point>org.openmrs.tracmodule.list</point>
+		<class>@MODULE_PACKAGE@.extension.html.AdminList</class>
+	</extension>
+	<!-- AOP
+	<extension>
+		<point>org.openmrs.gutter.tools</point>
+		<class>@MODULE_PACKAGE@.extension.html.CamerwaGutterLink</class>
+	</extension>
+	
+	
+	<advice>
+		<point>org.openmrs.api.FormService</point>
+		<class>@MODULE_PACKAGE@.advice.DuplicateFormAdvisor</class>
+	</advice>
+	 /AOP -->
+	
+	
+	<!-- Required Privileges 
+	<privilege>
+		<name>Form Entry</name>
+		<description>Allows user to access Form Entry pages/functions</description>
+	</privilege>
+	 /Required Privileges -->
+	 
+   <privilege>
+      <name>Export ARV regimens report</name>
+       <description>Able to export ARV regimens report</description>
+    </privilege>
+   
+    <privilege>
+      <name>View ARV Regimens monthly report</name>
+       <description>Able to view ARV Regimens monthly report module</description>
+    </privilege>
+   
+
+	 Required Global Properties 
+	<globalProperty>
+		<property>@MODULE_ID@.someProperty</property>
+		<defaultValue></defaultValue>
+		<description>
+			A description of the global property goes here.  The description
+			should explain enough for administrators to understand the purpose
+			and possible values for the global property.
+		</description>
+	</globalProperty>	
+	<globalProperty>
+		<property>camerwa.arvConceptIdList</property>
+		<defaultValue>796,797,633,628,794,635,631,625,802,2203,1613,749,795,814,5424,792,5811,630,2833</defaultValue>
+		<description>
+		This is a list of conceptIds for Arv drugs
+		</description>
+	</globalProperty>
+	
+	<globalProperty>
+		<property>camerwa.ExitedFromCareConceptId</property>
+		<defaultValue>1811</defaultValue>
+		<description>
+		This is a ExitedFromCare conceptId 
+	</description>
+	</globalProperty>
+		<globalProperty>
+		<property>camerwa.PatientDefaultedConceptId</property>
+		<defaultValue>1743</defaultValue>
+		<description>
+		This is a PatientDefaulted conceptId 
+		</description>
+	</globalProperty>
+		<globalProperty>
+		<property>camerwa.PatientDiedConceptId</property>
+		<defaultValue>1742</defaultValue>
+		<description>
+		This is a PatientDied  conceptId 
+	</description>
+	</globalProperty>
+		<globalProperty>
+		<property>camerwa.PatientTransferesOutConceptId</property>
+		<defaultValue>1744</defaultValue>
+		<description>
+		This is a PATIENT TRANSFERRED OUT conceptId 
+	</description>
+	</globalProperty>
+		<globalProperty>
+		<property>camerwa.TransterInFromConceptId</property>
+		<defaultValue>1427</defaultValue>
+		<description>
+		This is a TRANSFER IN FROM conceptId 
+	</description>
+	</globalProperty>
+	
+	
+	
+	/Required Global Properties
+	
+	 
+	<!--
+	<dwr>
+		<allow>
+			<create creator="new" javascript="DWRFormEntryService">
+				<param name="class" value="org.openmrs.module.@MODULE_ID@.web.DWRFormEntryService"/>
+				<include method="enterForm"/>
+			</create>
+		</allow>
+
+		<signatures>
+			<![CDATA[
+			import @MODULE_PACKAGE@.web.DWRFormEntryService;
+			DWRFormEntryService.enterForm(Integer patientId, Integer formId, boolean useEncounter, List<String> fields);
+			]]>
+		</signatures>	
+	</dwr>
+	-->
+	
+	<!-- Servlets -->
+	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> 
+	<servlet>
+		<servlet-name>formDownload</servlet-name>
+		<servlet-class>@MODULE_PACKAGE@.web.FormDownloadServlet</servlet-class>
+	</servlet>
+	-->
+	<!-- /Servlets -->
+	
+	
+	<!-- Internationalization -->
+	<!-- All message codes should start with @MODULE_ID@.* -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<messages>
+		<lang>fr</lang>
+		<file>messages_fr.properties</file>
+	</messages>
+	<messages>
+		<lang>es</lang>
+		<file>messages_es.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+	 <mappingFiles>
+     RegimenComposition.hbm.xml
+     RegimenCategory.hbm.xml
+    </mappingFiles>
+    <privilege>
+         <name>Manage Regimens</name>
+         <description>Able to create and delete regiemens</description>
+    </privilege>
+    
+	
+</module>
