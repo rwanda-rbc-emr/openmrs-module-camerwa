@@ -98,7 +98,7 @@ return tableRow;
 
 function addDrug(baseName, drugDispArray, classAttr, drugLabel){	
 // the containing table
-var table = $(document.createElement("table")).attr("id",baseName+"tableid_" + ++fieldGroupCount).attr("width","100%");
+var table = $(document.createElement("table")).attr("id",baseName+"tableid_" + ++fieldGroupCount).attr("width","90%");
 
 var drugs = createNakedOptionSelect("drugs_"+fieldGroupCount,drugDispArray, classAttr);
 

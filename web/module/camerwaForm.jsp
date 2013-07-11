@@ -47,7 +47,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 
 
 <div>
-<table border="1" align="left" height="15%" width="50%">
+<table border="1" align="left" height="15%" width="48%">
 	<tr class="tableRaw" > 
 		<td >INFORAMTION GENERAL</td>
 		<td >Anciens</td>
@@ -109,7 +109,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 </table> 
 
 
-<table border="1" height="100%"  align="right" height="15%" width="50%">
+<table border="1" height="15%"  align="right" height="15%" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >Informations supplementaires </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 <tr><td class="categories">1</td> <td class="categories">Nombre d'abandons   </td> <td><a href="patientList.form?year=${year}&amp;month=${month}&KeyPatinents=patientsExitedLast1">${patientsExitedLast1}</a></td> <td><a href="patientList.form?year=${year}&amp;month=${month}&KeyPatinents=patientsExitedNew1">${patientsExitedNew1} </a></td> <td> <a href="patientList.form?year=${year}&amp;month=${month}&KeyPatinents=TotalpatientsExitedFromCare1">${TotalpatientsExitedFromCare1}</a></td> </tr>
@@ -123,7 +123,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 
 <div style=" float: left; width: 100%;">
 
-<table border="1" height="20%" align="left"  width="50%">
+<table border="1" height="210%" align="left"  width="50%">
 
 <tr class="tableRaw"> <td >No </td><td >REGIMEN ADULT </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr> 
  <c:forEach var="adultRegimenResult" items="${adultRegimenResults}" varStatus="number">
