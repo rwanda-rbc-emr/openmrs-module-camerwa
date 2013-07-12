@@ -55,7 +55,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 	public HashMap<String, Object> getPatientsUnderDrug(Date dateFormatedNew, Date dateFormatedLimite) throws ParseException {
 		
 		
-		Session session = sessionFactory.getCurrentSession();
+		//Session session = sessionFactory.getCurrentSession();
 		
 		HashMap<String, Object> returnCollection = new HashMap<String, Object>();
 		List<Integer> patientsOnRegimens= new ArrayList<Integer>();
@@ -81,15 +81,14 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		
 		patientsActiveUnderARVNewList.removeAll(patientsCurentUnderArv);
 		
-		
 		List<Integer> patientsCurrentUnderArv = getOldPatientPerDate(dateFormatedNew);
-		List<Integer> patientsSwimsNewButOld = (List<Integer>) twoCollectionsIntersection(patientsCurrentUnderArv, patientsActiveUnderARVNewList) ;
+	    List<Integer> patientsSwimsNewButOld = (List<Integer>) twoCollectionsIntersection(patientsCurrentUnderArv, patientsActiveUnderARVNewList) ;
 		patientsActiveUnderARVNewList.removeAll(patientsSwimsNewButOld);
 		
 		
-		returnCollection.put("patientsUnderARVNew", removeLostFollowUp(patientsActiveUnderARVNewList, dateFormatedLimite)
+		returnCollection.put("patientsUnderARVNew", patientsActiveUnderARVNewList
 		        .size()); 
-		patientsOnRegimens.addAll(removeLostFollowUp(patientsActiveUnderARVNewList, dateFormatedLimite));
+		patientsOnRegimens.addAll(patientsActiveUnderARVNewList);
 		
 		List<Integer> allpatientsUnderARVList = (List<Integer>) getAllPatientsUnderARV(dateFormatedNew, dateFormatedLimite);
 		
@@ -107,6 +106,10 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		
 		returnCollection.put("LastPatientsUnderARV", allPatientsActiveUnderARVList.size());
 		patientsOnRegimens.addAll(allPatientsActiveUnderARVList);
+		
+		//System.out.println("vvvv  vvvv vvvvvvvvv patientsUnderARVNewList vvvvvvvvv vvvvvvvvvvvv "+patientsUnderARVNewList.size());
+		//System.out.println("xxxxxxxxxxxxxx  wwwwwwwwww  patientsUnderARVNewList vvvvvvvvv vvvvvvvvvvvv "+patientsActiveUnderARVNewList.size());
+		
 		
 		//getting adults under ARV  new	
 		
@@ -160,9 +163,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		List<Integer> patientsKidsSwimsNewButOld = (List<Integer>) twoCollectionsIntersection(patientsCurrentUnderArv, kidsActiveUnderARVNewList) ;
 		kidsActiveUnderARVNewList.removeAll(patientsKidsSwimsNewButOld);
 		
-		
-		
-		returnCollection.put("kidsDOBQueryNew", kidsActiveUnderARVNewList.size());
+    	returnCollection.put("kidsDOBQueryNew", kidsActiveUnderARVNewList.size());
 		patientsOnRegimens.addAll(kidsActiveUnderARVNewList);
 		//getting all kids under ARV
 		
@@ -312,7 +313,6 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 			
 			returnCollection.put("pediatricRegimenName"+countPediatric,regimenComposition.get(0));
 			
-			
 			List<Integer> pediatricRegimenNew = (List<Integer>) getPediatricUnderRegimenNew(dateFormatedNew,
 			    dateFormatedLimite, regimenComposition.get(1), regimenComposition.get(2), regimenComposition.get(3),regimenComposition.get(4)).get(0);
 			List<Integer> activePediatricRegimenNew = new ArrayList<Integer>();
@@ -403,7 +403,6 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 			
 			returnCollection.put("adultSecondLineName"+countAdultSecondLine,regimenComposition.get(0));
 			
-			
 			List<Integer> pediatricSecondLineNew = (List<Integer>) getAdultUnderSecondLineRegimenNew(dateFormatedNew,
 			    dateFormatedLimite, regimenComposition.get(1), regimenComposition.get(2), regimenComposition.get(3),
 			    regimenComposition.get(4)).get(0);
@@ -412,7 +411,6 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 			
 			returnCollection.put("adultSecondLineNew" + countAdultSecondLine, activeAdultSecondLineNew.size());
 			patientsOnRegimens.addAll(activeAdultSecondLineNew);
-			
 			
 			List<Integer> adultSecondLineLast = (List<Integer>) getAdultUnderSecondLineRegimenLast(dateFormatedNew,
 			    dateFormatedLimite, regimenComposition.get(1), regimenComposition.get(2), regimenComposition.get(3),
@@ -670,7 +668,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 
 		returnCollection.put("patientsOnRegimens", patientsOnRegimens);
 		//patientsOnRegimens
-	 log.info("patientsOnRegimenspatien   just to check tsOnRegimenspatientsOnRegimenspatientsOnRegimenspatientsOnRegimenspatientsOnRegimens"+patientsOnRegimens);
+	// log.info("patientsOnRegimenspatien   just to check tsOnRegimenspatientsOnRegimenspatientsOnRegimenspatientsOnRegimenspatientsOnRegimens"+patientsOnRegimens);
 	
 		return returnCollection;
 	}
@@ -703,7 +701,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 	
 	public List<Integer> getActivePatients(List<Integer> patientsUnderARVNewList, List<Integer> patientsExitedFromCareList,
 	                                       Date startDate) {
-	
+	log.info("patientsActive patientsActive patientsActive patientsActive patientsActive"+patientsUnderARVNewList);
 		List<Integer> patientsActive = new ArrayList<Integer>();
 		
 		boolean notFound;
@@ -721,8 +719,9 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 				patientsActive.add(i);
 		}
 	
-		
-		return removeLostFollowUp(patientsActive, startDate);
+		return patientsActive;
+		//log.info("patientsActive  removeLostFollowUp(patientsActive, startDate) removeLostFollowUp(patientsActive, startDate) removeLostFollowUp(patientsActive, startDate) patientsActive patientsActive patientsActive patientsActive"+removeLostFollowUp(patientsActive, startDate));
+		//return removeLostFollowUp(patientsActive, startDate);
 	}
 	
 	public List<Integer> getAllKidsDOBQuery(Date dateFormatedNew, Date dateFormatedLimite) {
@@ -732,8 +731,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery allKidsDOBQuery = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
 		                + " inner join person on person_id=p.patient_id where o.start_date < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -749,8 +748,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery kidsDOBQueryNew = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
 		                + " inner join person on person_id=p.patient_id where o.start_date >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -767,8 +766,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery allAdultDOBQuery = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
 		                + " inner join person on person_id=p.patient_id where o.start_date < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -786,8 +785,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery adultDOBQueryNew = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
 		                + " inner join person on person_id=p.patient_id where o.start_date >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -806,9 +805,9 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery allPatientsUnderARV = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id "
 		                + "inner join drug_order dor on dor.order_id=o.order_id "
-		                + "inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") where o.start_date < "
-		                + "'"
+		                + "inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		               // + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") "
+		                + " where o.start_date < '"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "' and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and p.voided = 0 and o.voided = 0");
 		
@@ -823,9 +822,9 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery patientsUnderARVNew = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id "
 		                + "inner join drug_order dor on dor.order_id=o.order_id "
-		                +" inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") where o.start_date >= "
-		                + "'"
+		                +" inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+") "
+		              //  + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") where o.start_date >= "
+		                + " where o.start_date >= '"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "' and o.start_date < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
@@ -913,8 +912,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery kidsUnderArvComprimeNew = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' "
 		                + " inner join person on person_id=p.patient_id where o.start_date >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -932,8 +931,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery AllKidsUnderArvComprime = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+") "
+		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' "
 		                + " inner join person on person_id=p.patient_id where o.start_date < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -949,8 +948,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery kidsUnderArvSiropsNew = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%sirop%' and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%sirop%' "
 		                + " inner join person on person_id=p.patient_id where o.start_date >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -968,8 +967,8 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery allKidsUnderArvSiropsLast = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id "
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%sirop%' and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%sirop%' "
 		                + " inner join person on person_id=p.patient_id where o.start_date < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
@@ -1001,6 +1000,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		
 			patientsUnderRegimenAdultNew = (List<Integer>) treeCollectionsIntersection(adultRegimen1, adultRegimen2,
 			    adultRegimen3);
+		//	log.info("patientsUnderRegimenAdultNewpatientsUnderRegimenAdultNewpatientsUnderRegimenAdultNewpatientsUnderRegimenAdultNew"+patientsUnderRegimenAdultNew);
 			
 		}
 		if(adultRegimen4.size() == 0 && adultRegimen3.size() == 0 && adultRegimen2.size() == 0 && adultRegimen1.size() != 0 && drugConceptId2 == null && drugConceptId3 == null & drugConceptId4 == null){
@@ -1008,14 +1008,16 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 			patientsUnderRegimenAdultNew = adultRegimen1;
 		}
 		
-		
-		
+		log.info(" patientsUnderRegimenAdultNewpatientsUnderRegimenAdultNewpatientsUnderRegimenAdultNewpatientsUnderRegimenAdultNew"+patientsUnderRegimenAdultNew);
+
 		List<Integer> ActivePtientsUnderRegimenAdultNew = getActivePatients(patientsUnderRegimenAdultNew,
 		    patientsExitedFromCareList, dateFormatedLimite);
 		
-		
-		
+		log.info("After new patientsUnderRegimenAdultNewpatientsUnderRegimenAdultNewpatientsUnderRegimenAdultNewpatientsUnderRegimenAdultNew"+ActivePtientsUnderRegimenAdultNew);
+
 		List<Integer> patientsCurrentUnderArv = getOldPatientPerDate(dateFormatedNew);
+		log.info("After new patientsCurrentUnderArv patientsCurrentUnderArv patientsCurrentUnderArv patientsCurrentUnderArv patientsCurrentUnderArv patientsCurrentUnderArv"+ActivePtientsUnderRegimenAdultNew);
+
 		List<Integer> patientsSwimsNewButOld = (List<Integer>) twoCollectionsIntersection(patientsCurrentUnderArv, ActivePtientsUnderRegimenAdultNew) ;
 		ActivePtientsUnderRegimenAdultNew.removeAll(patientsSwimsNewButOld);
 	 
@@ -1023,8 +1025,6 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		newAndOldPatients.add(ActivePtientsUnderRegimenAdultNew);
 		newAndOldPatients.add(patientsSwimsNewButOld);
 	 
-		
-		
 		return  newAndOldPatients;
 		
 	}
@@ -1046,12 +1046,12 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + "' and o.start_date < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.voided = 0 and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
+		                + " and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 	
 	// log.info("patientsUnderRegimenAdultNewOneDrug.list() h this is again new "+patientsUnderRegimenAdultNewOneDrug.list());
 		return patientsUnderRegimenAdultNewOneDrug.list();
 		
-	}public List<Integer> getRegimenAdultNewForOneDrugEfv600(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1) {
+	}/*public List<Integer> getRegimenAdultNewForOneDrugEfv600(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1) {
 		
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery patientsUnderRegimenAdultNewOneDrug = session
@@ -1068,7 +1068,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + "and o.discontinued = 0 and o.discontinued_date is null and o.auto_expire_date is null and o.discontinued = 0 and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 		return patientsUnderRegimenAdultNewOneDrug.list();
 		
-	}
+	}*/
 	
 	public List<Integer> getRegimenAdultLast(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1,
 	                                         Object drugConceptId2, Object drugConceptId3, Object drugConceptId4) {
@@ -1081,11 +1081,10 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		List<Integer> adultRegimen3 = getRegimenAdultLastOneDrug(dateFormatedNew, dateFormatedLimite, drugConceptId3);
 		List<Integer> adultRegimen4 = getRegimenAdultLastOneDrug(dateFormatedNew, dateFormatedLimite, drugConceptId4);	
 		
-		log.info("ccccccccccccccc "+adultRegimen1+"vvvvvvvvv "+adultRegimen2+"  dddddddd "+adultRegimen3+" xxxxxxxxxx "+adultRegimen4);
+	//	log.info("ccccccccccccccc "+adultRegimen1+"vvvvvvvvv "+adultRegimen2+"  dddddddd "+adultRegimen3+" xxxxxxxxxx "+adultRegimen4);
 		
 		
 		if (drugConceptId4 != null) {
-			
 			
 			allPatientUnderRegimenAdult = (List<Integer>) faurCollectionsIntersection(adultRegimen1, adultRegimen2,
 			    adultRegimen3, adultRegimen4);
@@ -1093,7 +1092,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 			
 			allPatientUnderRegimenAdult = (List<Integer>) treeCollectionsIntersection(adultRegimen1, adultRegimen2,
 			    adultRegimen3);
-			log.info("qqqqqqqqqqqqqqqqqqqqqq qqqqqqqqqqqqqqqqqq qqqqqqqqqq "+allPatientUnderRegimenAdult);	
+		//	log.info("qqqqqqqqqqqqqqqqqqqqqq qqqqqqqqqqqqqqqqqq qqqqqqqqqq "+allPatientUnderRegimenAdult);	
 		//	log.info("  i m getting in getregimenAdult method and in this condition "+allPatientUnderRegimenAdult+");// adultRegimen1 "+adultRegimen1+"adultRegimen2"+adultRegimen2+"adultRegimen3"+adultRegimen3);
 		}
 		if(drugConceptId4 == null && drugConceptId3 == null && drugConceptId2 == null && drugConceptId1 != null){
@@ -1108,13 +1107,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		
 		for (Integer currentPatientId : allPatientUnderRegimenAdult) {
 
-	log.info(" currentPatientId  f currentPatientId currentPatientId new currentPatientId "+currentPatientId+" rere "+drugConceptId1+" drugConceptId2 "+drugConceptId2+" grgr "+drugConceptId3+" rererere "+drugConceptId4);		
+//	log.info(" currentPatientId  f currentPatientId currentPatientId new currentPatientId "+currentPatientId+" rere "+drugConceptId1+" drugConceptId2 "+drugConceptId2+" grgr "+drugConceptId3+" rererere "+drugConceptId4);		
 			if (compareStartDatesByPatient(currentPatientId, drugConceptId1, drugConceptId2, drugConceptId3, drugConceptId4,
 			    dateFormatedNew)) {
 			
 				patientUnderRegimenAdultLast.add(currentPatientId);
 				
-	 log.info("patientUnd   g new erRegimenAdultLastpatientUnderRegimenAdultLastpatientUnderRegimenAdultLastpatientUnd g erRegimenAdultLast"+patientUnderRegimenAdultLast);		
+//	 log.info("patientUnd   g new erRegimenAdultLastpatientUnderRegimenAdultLastpatientUnderRegimenAdultLastpatientUnd g erRegimenAdultLast"+patientUnderRegimenAdultLast);		
 			}
 		}
 		
@@ -1128,7 +1127,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 	        log.error("Error generated", e);
         }
 	  
-        log.info("patientUnderRegimenAdultLast patientUnderRegimenAdultLast patientUnderRegimenAdultLastpatientUnderRegimenAdultLast patientUnderRegimenAdultLast patientUnderRegimenAdultLast "+patientUnderRegimenAdultLast);
+    //    log.info("patientUnderRegimenAdultLast patientUnderRegimenAdultLast patientUnderRegimenAdultLastpatientUnderRegimenAdultLast patientUnderRegimenAdultLast patientUnderRegimenAdultLast "+patientUnderRegimenAdultLast);
 		
 		List<Integer> activePatientsUnderRegimenAdultLast = getActivePatients(patientUnderRegimenAdultLast,
 		    patientsExitedFromCareList, dateFormatedLimite);
@@ -1145,7 +1144,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.discontinued = 0 and o.start_date < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
@@ -1153,7 +1152,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		//log.info("allPatientUnderRegimenAdultOnDrug.list()"+allPatientUnderRegimenAdultOnDrug.list());
 		return allPatientUnderRegimenAdultOnDrug.list();
 	}
-	public List<Integer> getRegimenAdultLastOneDrugEvr600(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1) {
+	/*public List<Integer> getRegimenAdultLastOneDrugEvr600(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1) {
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery allPatientUnderRegimenAdultOnDrug = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
@@ -1166,7 +1165,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + "'"
 		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 		return allPatientUnderRegimenAdultOnDrug.list();
-	}
+	}*/
 	
 	public List<Integer> getPediatricUnderRegimenLast(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1,
 	                                                  Object drugConceptId2, Object drugConceptId3, Object drugConceptId4) {
@@ -1222,13 +1221,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery pediatricUnderRegimenLastOneDrug = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and o.concept_id ="
-		                + drugConceptId1
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and o.concept_id ="
+		                + drugConceptId1*/
+		                + " inner join person on person_id=p.patient_id where o.concept_id = "+drugConceptId1+" and o.discontinued = 0 and o.start_date < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		
 		return pediatricUnderRegimenLastOneDrug.list();
 	}
@@ -1276,15 +1275,15 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		SQLQuery pediatricUnderRegimenNewOneDrug = session
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and o.concept_id ="
-		                + drugConceptId1
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and o.concept_id ="
+		                + drugConceptId1*/
+		                + " inner join person on person_id=p.patient_id where o.concept_id = "+drugConceptId1+" and o.start_date >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "' and o.start_date < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.voided = 0  and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		
 		return pediatricUnderRegimenNewOneDrug.list();
 	}
@@ -2264,8 +2263,6 @@ return kidsDOBQueryNew.list();
 		Date threeMonthsBeforeEndDate = getTreeMonthBefore(df.format(startDate));
 		
 		
-		
-
 		@SuppressWarnings("unused")
 		List<Date> maxDate = new ArrayList<Date>();
 		
@@ -2521,6 +2518,7 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
  		
  	} 
      public List<Integer> getRegimenCompositionByName(String regimenName) {
+    	// log.info(":;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"+regimenName);
  		Session session = sessionFactory.getCurrentSession();
  		SQLQuery regimenCompostion1 = session
  		        .createSQLQuery("select drug_concept_id1 from regimencomposition where regimen_name='"+regimenName+"'");
@@ -2542,14 +2540,13 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
  		return regimenCompostions;
  	}
      public List<Integer> getOldPatientPerDate(Date dateFormatedNew) {
-    	 	 
+    	 CamerwaGlobalProperties gp = new CamerwaGlobalProperties();
+ 		String arvConceptIds = gp.getArvConceptIdList();	 
     	 Session session = sessionFactory.getCurrentSession();
   		 SQLQuery patientsList = session
   		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
-		                 +" inner join drug_order dor on dor.order_id=o.order_id"
-		                 +" inner join drug d on dor.drug_inventory_id=d.drug_id and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");       	 
-  		
-  				
+		                 +" inner join drug_order dor on dor.order_id=o.order_id and o.concept_id in("+arvConceptIds+")  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");
+		                //+" inner join drug d on dor.drug_inventory_id=d.drug_id and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");       	 and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0		
   		return patientsList.list();
   	} 
   
@@ -2621,8 +2618,6 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
 		  	if(drug_concept_id4!=null){
 		  		regimenComposition.setDrugConceptId4((Integer) drug_concept_id4);	
 		  	}
-		  	
-		   
 		   SQLQuery query = session.createSQLQuery("INSERT INTO regimencomposition (regimen_category, regimen_name,drug_concept_id1,drug_concept_id2,drug_concept_id3,drug_concept_id4) VALUES ('"+regimen_category+"','"+regimen_name+"',"+drug_concept_id1+","+drug_concept_id2+","+drug_concept_id3+","+drug_concept_id4+")");
 			query.executeUpdate();
 			
@@ -2631,15 +2626,11 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
     	
 	    queryHasExecuted= false;
     }
-		
-		
 		return queryHasExecuted;
 	}
    public Date getTreeMonthBefore(String date){
 	   Session session = getSessionFactory().getCurrentSession();
 	   SQLQuery query = session.createSQLQuery("SELECT DATE_SUB(CAST('"+date+"' AS DATE), INTERVAL 3 MONTH);");
-	   
-	   
 	return (Date) query.uniqueResult();
 	   
    }
@@ -2657,9 +2648,7 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
 		strbuf.append(gp.getArvConceptIdList());
 		strbuf.append(" ) AND o.patient_id = ");
 		strbuf.append(patient.getPatientId());
-		
 		query = session.createSQLQuery(strbuf.toString());
-		
 		List<Date> dates = query.list();
 		Date whenPatientStarted = dates.get(0);
 		
