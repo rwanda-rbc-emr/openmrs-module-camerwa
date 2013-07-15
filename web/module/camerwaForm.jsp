@@ -123,7 +123,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 
 <div style=" float: left; width: 100%;">
 
-<table border="1" height="210%" align="left"  width="50%">
+<table border="1" height="10" align="left"  width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >REGIMEN ADULT </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr> 
  <c:forEach var="adultRegimenResult" items="${adultRegimenResults}" varStatus="number">
@@ -137,7 +137,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
  
 
  
- <table border="1"  align="right" width="50%">
+ <table border="1"  align="right" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >REGIMEN PEDIATRIC(COMPRIMES) </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr> 
  <c:forEach var="pediatricRegimenResult" items="${pediatricRegimenResults}" varStatus="number">
@@ -153,7 +153,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 </div>
  
 <div style=" float: left; width: 100%;">
-<table border="1" align="left" width="50%">
+<table border="1" align="left" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >ENFANTS: REGIMEN SECOND LINE </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 
@@ -169,7 +169,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 
 
 
-<table border="1" align="right" width="50%">
+<table border="1" align="right" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >ADULTS: REGIMEN SECOND LINE </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 
@@ -186,7 +186,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
  </div> 
 <div style=" float: left; width: 100%;">
 
-<table border="1" align="left" width="50%">
+<table border="1" align="left" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >PROPHYLAXIE POST EXPOSITION </td> <td > ANCIEN </td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 <c:forEach var="prophylaxiePostExpositionResult" items="${prophylaxiePostExpositionResults}" varStatus="number">
@@ -198,7 +198,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 <tr><td> </td><td class="categories">Total</td><td><font color="green" > ${sumOfProphylaxiePostExpositionLast}</font></td><td><font color="green">${sumOfProphylaxiePostExpositionNew}</font></td><td><font color="green">${sumOfProphylaxiePostExpositionTatals}</font></td></tr>
 </table> 
 
-<table border="1" align="right" width="50%">
+<table border="1" align="right" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >PMTCT </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 <c:forEach var="pmtctResult" items="${pmtctResults}" varStatus="number">
@@ -215,7 +215,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 
 </div> 
 <div>
-<table border="1" align="left" width="50%">
+<table border="1" align="left" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >ENFANT:REGIMES PEDIATRIQUES(SIROPS)</td> <td > ANCIEN </td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 
@@ -228,7 +228,7 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 <tr><td> </td><td class="categories">Total</td><td><font color="green" > ${sumOfPediatricSiropLast}</font></td><td><font color="green">${sumOfPediatricSiropNew}</font></td><td><font color="green">${sumOfPediatricSiropTotals}</font></td></tr>
 </table>
 
-<table border="1" align="right" width="50%">
+<table border="1" align="right" width="48%">
 
 <tr class="tableRaw"> <td >No </td><td >  ADULT THIRD LINE REGIMEN </td> <td > ANCIEN</td> <td >NOUVEAUX </td><td >TOTAL</td> </tr>
 <c:forEach var="adultRegimenAdultThirdLineResult" items="${adultRegimenAdultThirdLineResults}" varStatus="number">
@@ -240,8 +240,6 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 
 <tr><td> </td><td class="categories">Total</td><td><font color="green"> ${sumOfRegimenAdultThirdLineLast}</font></td><td><font color="green">${sumOfRegimenAdultThirdLineNew}</font></td><td><font color="green">${sumOfRegimenAdultThirdLineTatals}</font></td></tr>
  </table>
-
-
 
 
 </div> 
@@ -257,8 +255,5 @@ file="/moduleResources/camerwa/javaScriptPrint.js" />
 </c:if>
 </div>
 
-
-
- 
  
 <!-- <%@ include file="/WEB-INF/template/footer.jsp"%> -->  
