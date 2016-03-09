@@ -733,11 +733,11 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return allKidsDOBQuery.list();
 	}
 	
@@ -750,12 +750,12 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
-		                + "'and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "'and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return kidsDOBQueryNew.list();
 	}
 	
@@ -768,11 +768,11 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 		return allAdultDOBQuery.list();
 	}
 	
@@ -787,13 +787,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 		
 		return adultDOBQueryNew.list();
 	}
@@ -807,9 +807,9 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + "inner join drug_order dor on dor.order_id=o.order_id "
 		                + "inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		               // + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") "
-		                + " where o.start_date < '"
+		                + " where o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and p.voided = 0 and o.voided = 0");
+		                + "' and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and p.voided = 0 and o.voided = 0");
 		
 		return allPatientsUnderARV.list();
 	}
@@ -823,12 +823,12 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id "
 		                + "inner join drug_order dor on dor.order_id=o.order_id "
 		                +" inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+") "
-		              //  + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") where o.start_date >= "
-		                + " where o.start_date >= '"
+		              //  + "inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+") where o.date_activated >= "
+		                + " where o.date_activated >= '"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
-		                + "'and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null ");
+		                + "'and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null ");
 		return patientsUnderARVNew.list();
 	}
 	
@@ -914,13 +914,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' "
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return kidsUnderArvComprimeNew.list();
 	}
 	
@@ -933,11 +933,11 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+") "
 		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' "
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return AllKidsUnderArvComprime.list();
 	}
 	
@@ -950,13 +950,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%sirop%' "
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return kidsUnderArvSiropsNew.list();
 	}
 	
@@ -969,11 +969,11 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
 		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%sirop%' "
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return allKidsUnderArvSiropsLast.list();
 	}
 	
@@ -1040,10 +1040,10 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id = "
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
 		                + " and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
@@ -1059,13 +1059,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%Efavirenz(600)%'and d.drug_id = "
 		                + drugConceptId1
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.discontinued_date is null and o.auto_expire_date is null and o.discontinued = 0 and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
+		                + "and o.discontinued_date is null and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 		return patientsUnderRegimenAdultNewOneDrug.list();
 		
 	}*/
@@ -1144,7 +1144,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.discontinued = 0 and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
@@ -1159,11 +1159,11 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name like '%Efavirenz(600)%' and d.drug_id ="
 		                + drugConceptId1
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15;");
 		return allPatientUnderRegimenAdultOnDrug.list();
 	}*/
 	
@@ -1223,7 +1223,7 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and o.concept_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id = "+drugConceptId1+" and o.discontinued = 0 and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id = "+drugConceptId1+" and o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
@@ -1277,10 +1277,10 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name not like '%sirop%' and o.concept_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id = "+drugConceptId1+" and o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.concept_id = "+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
 		                + "and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
@@ -1382,13 +1382,13 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name LIKE '%sirop%' and o.concept_id ="
 		                + drugConceptId1
-		                + " inner join person on person_id=p.patient_id where o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		
    		return kidsDOBQueryNew.list();
 	}
@@ -1447,11 +1447,11 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.name LIKE '%sirop%' and o.concept_id = "
 		                + drugConceptId1
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		
 		return kidsDOBQueryNew.list();
 	}
@@ -1508,13 +1508,13 @@ SQLQuery kidsDOBQueryNew = session
     + " inner join drug_order dor on dor.order_id=o.order_id"
     /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id ="
     + drugConceptId1*/
-    + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+    + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
     + "'"
     + getDateFormatedFromDateObject(dateFormatedNew)
-    + "' and o.start_date < '"
+    + "' and o.date_activated < '"
     + getDateFormatedFromDateObject(dateFormatedLimite)
     + "'"
-    + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
+    + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
 return kidsDOBQueryNew.list();
 }
 
@@ -1573,11 +1573,11 @@ SQLQuery kidsDOBQueryNew = session
     + " inner join drug_order dor on dor.order_id=o.order_id"
     /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id = "
     + drugConceptId1*/
-    + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date < "
+    + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated < "
     + "'"
     + getDateFormatedFromDateObject(dateFormatedNew)
     + "'"
-    + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
+    + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
 
 return kidsDOBQueryNew.list();
 }
@@ -1629,13 +1629,13 @@ return kidsDOBQueryNew.list();
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		return kidsDOBQueryNew.list();
 	}
 	
@@ -1647,13 +1647,13 @@ return kidsDOBQueryNew.list();
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
 		return kidsDOBQueryNew.list();
 	}
 	
@@ -1791,13 +1791,13 @@ return kidsDOBQueryNew.list();
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id ="
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null;");
+		                + "and o.auto_expire_date is null;");
 		return kidsDOBQueryNew.list();
 	}
 	
@@ -1854,11 +1854,11 @@ return kidsDOBQueryNew.list();
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id = "
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
 		
 		return kidsDOBQueryNew.list();
 	}
@@ -1911,13 +1911,13 @@ return kidsDOBQueryNew.list();
 		                + drugConceptId1*/
 		                +" inner join patient_program pp on p.patient_id= pp.patient_id "
 	                    +" inner join program pro on pp.program_Id = pro.program_id and pro.concept_id=1647"
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null;");
+		                + "and o.auto_expire_date is null;");
 		return kidsDOBQueryNew.list();
 	}
 	public List<Integer> getPatientsUnderPmtcNewOneDrugSirop(Date dateFormatedNew, Date dateFormatedLimite, Object drugConceptId1) {
@@ -1929,13 +1929,13 @@ return kidsDOBQueryNew.list();
 		                + drugConceptId1*/
 		                +" inner join patient_program pp on p.patient_id= pp.patient_id "
 	                    +" inner join program pro on pp.program_Id = pro.program_id and pro.concept_id=1647" 
-		                +" inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date >= "
+		                +" inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated >= "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "' and o.start_date < '"
+		                + "' and o.date_activated < '"
 		                + getDateFormatedFromDateObject(dateFormatedLimite)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null;");
+		                + "and o.auto_expire_date is null;");
 		return kidsDOBQueryNew.list();
 	}
 	
@@ -1999,11 +1999,11 @@ return kidsDOBQueryNew.list();
 		                + drugConceptId1*/
 		                +" inner join patient_program pp on p.patient_id= pp.patient_id "
 	                    +" inner join program pro on pp.program_Id = pro.program_id and pro.concept_id=1647 "
-		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id ="+drugConceptId1+" and o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null ;");
+		                + "and o.auto_expire_date is null ;");
 		
 		return kidsDOBQueryNew.list();
 	}
@@ -2017,11 +2017,11 @@ return kidsDOBQueryNew.list();
 		                " inner join patient_program pp on p.patient_id= pp.patient_id "+
 	                    " inner join program pro on pp.program_Id = pro.program_id and pro.concept_id=1647 "
 		                
-		                + " inner join person on person_id=p.patient_id where o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null ;");
+		                + "and o.auto_expire_date is null ;");
 		
 		return kidsDOBQueryNew.list();
 	}
@@ -2035,11 +2035,11 @@ return kidsDOBQueryNew.list();
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id = "
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id="+drugConceptId1+" and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id="+drugConceptId1+" and o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
 		
 		return kidsDOBQueryNew.list();
 	}
@@ -2052,11 +2052,11 @@ return kidsDOBQueryNew.list();
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                /*+ " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id = "
 		                + drugConceptId1*/
-		                + " inner join person on person_id=p.patient_id where o.concept_id="+drugConceptId1+" and o.start_date < "
+		                + " inner join person on person_id=p.patient_id where o.concept_id="+drugConceptId1+" and o.date_activated < "
 		                + "'"
 		                + getDateFormatedFromDateObject(dateFormatedNew)
 		                + "'"
-		                + "and o.discontinued = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
+		                + "and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 >= 15 ;");
 		
 		return kidsDOBQueryNew.list();
 	}
@@ -2104,7 +2104,7 @@ return kidsDOBQueryNew.list();
 		Integer conceptInteger = (Integer) conceptId;
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery startDates = session
-		        .createSQLQuery("select distinct o.start_date from patient p inner join orders o on o.patient_id=p.patient_id"
+		        .createSQLQuery("select distinct o.date_activated from patient p inner join orders o on o.patient_id=p.patient_id"
 		               // + " inner join drug_order dor on dor.order_id=o.order_id"
 		               // + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.concept_id = "
 		                + " where o.concept_id = "+conceptInteger
@@ -2118,13 +2118,13 @@ return kidsDOBQueryNew.list();
 		
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery startDate = session
-		        .createSQLQuery("select distinct o.start_date from patient p inner join orders o on o.patient_id=p.patient_id"
+		        .createSQLQuery("select distinct o.date_activated from patient p inner join orders o on o.patient_id=p.patient_id"
 		                + " inner join drug_order dor on dor.order_id=o.order_id"
 		                + " inner join drug d on dor.drug_inventory_id=d.drug_id and d.drug_id = "
 		                + ConceptId
 		                + " and p.patient_id ="
 		                + patientId
-		                + " where o.start_date < "
+		                + " where o.date_activated < "
 		                + getDateFormatedFromDateObject(dateFormatedNew) + "");
 		
 		return true;
@@ -2545,8 +2545,8 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
     	 Session session = sessionFactory.getCurrentSession();
   		 SQLQuery patientsList = session
   		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
-		                 +" inner join drug_order dor on dor.order_id=o.order_id and o.concept_id in("+arvConceptIds+")  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");
-		                //+" inner join drug d on dor.drug_inventory_id=d.drug_id and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");       	 and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.start_date < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0		
+		                 +" inner join drug_order dor on dor.order_id=o.order_id and o.concept_id in("+arvConceptIds+")  and o.date_activated < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");
+		                //+" inner join drug d on dor.drug_inventory_id=d.drug_id and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.date_activated < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0");       	 and d.concept_id in(796,797,633,628,794,635,631,625,802,2203,1613,794,749,795,814,5424,792,5811,630,2833)  and o.date_activated < '"+getDateFormatedFromDateObject(dateFormatedNew)+"' and o.voided = 0		
   		return patientsList.list();
   	} 
   
@@ -2641,7 +2641,7 @@ public List<Integer> getPatientOnOnlyGivenDrugs(List<Integer> listDrugIds, List<
 		
 		StringBuffer strbuf = new StringBuffer();
 		
-		strbuf.append("SELECT cast(min(o.start_date) as DATE ) FROM orders o  ");
+		strbuf.append("SELECT cast(min(o.date_activated) as DATE ) FROM orders o  ");
 		strbuf.append("INNER JOIN drug_order dro on dro.order_id = o.order_id  ");
 		strbuf.append("inner join drug dr on dr.drug_id = dro.drug_inventory_id ");
 		strbuf.append("where dr.concept_id in (");

@@ -15,10 +15,10 @@ package org.openmrs.module.camerwa;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.openmrs.module.Extension.MEDIA_TYPE;
 import org.openmrs.module.camerwa.extension.html.AdminList;
+
+import junit.framework.TestCase;
 
 
 /**

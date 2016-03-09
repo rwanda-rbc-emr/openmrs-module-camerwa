@@ -28,10 +28,10 @@ public class RegimenComponent {
         this.drugOrder = drugOrder;
         this.drug = drugOrder.getDrug();
         this.generic = drugOrder.getConcept();
-        this.startDate = drugOrder.getStartDate();
+        this.startDate = drugOrder.getEffectiveStartDate();
         if (drugOrder.isDiscontinued(new Date())) {
-            this.stopDate = drugOrder.getDiscontinuedDate();
-            this.stopReason = drugOrder.getDiscontinuedReason();
+            this.stopDate = drugOrder.getEffectiveStopDate();
+            this.stopReason = drugOrder.getOrderReason();
         } else {
             this.stopDate = drugOrder.getAutoExpireDate();
         }

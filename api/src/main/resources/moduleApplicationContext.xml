@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean parent="serviceContext">
+		<property name="moduleService">
+	   		<list>
+				<value>org.openmrs.module.camerwa.service.CamerwaService</value> 
+				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager"><ref bean="transactionManager"/></property>
+					<property name="target">
+						<bean class="org.openmrs.module.camerwa.impl.CamerwaServiceImpl">
+							<property name="dataQualityDAO">
+								<bean class="org.openmrs.module.camerwa.db.hibernate.HibernateCamerwaDAO">
+									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
+								</bean> 
+							</property>	 
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<list>
+							<ref bean="authorizationInterceptor"/>
+						</list>
+					</property>
+					<property name="transactionAttributeSource">
+						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+					</property>
+				</bean>
+		   </list>
+		</property>
+    </bean>
+</beans>
