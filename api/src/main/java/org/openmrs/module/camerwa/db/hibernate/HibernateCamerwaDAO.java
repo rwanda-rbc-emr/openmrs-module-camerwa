@@ -714,9 +714,10 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 					break;
 				}
 			}
-			if (notFound)
+			if (notFound) {
 				if(!patientsActive.contains(i))
-				patientsActive.add(i);
+					patientsActive.add(i);
+			}
 		}
 	
 		return patientsActive;
@@ -728,16 +729,18 @@ public class HibernateCamerwaDAO implements CamerwaDAO {
 		Session session = sessionFactory.getCurrentSession();
 		CamerwaGlobalProperties gp = new CamerwaGlobalProperties();
 		String arvConceptIds = gp.getArvConceptIdList();
+		
+		String sqlQuery = "select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
+                + " inner join drug_order dor on dor.order_id=o.order_id"
+                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
+              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
+                + " inner join person on person_id=p.patient_id where o.date_activated < "
+                + "'"
+                + getDateFormatedFromDateObject(dateFormatedNew)
+                + "'"
+                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;";
 		SQLQuery allKidsDOBQuery = session
-		        .createSQLQuery("select distinct p.patient_id from patient p inner join orders o on o.patient_id=p.patient_id"
-		                + " inner join drug_order dor on dor.order_id=o.order_id"
-		                + " inner join patient_program prog on prog.patient_id=p.patient_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and o.concept_id in("+arvConceptIds+")"
-		              //  + " inner join drug d on dor.drug_inventory_id=d.drug_id and (prog.program_id = 2 or prog.program_id = 1) and prog.voided = 0 and d.concept_id in("+arvConceptIds+")"
-		                + " inner join person on person_id=p.patient_id where o.date_activated < "
-		                + "'"
-		                + getDateFormatedFromDateObject(dateFormatedNew)
-		                + "'"
-		                + "and p.voided = 0 and o.voided = 0 and o.auto_expire_date is null and DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(person.birthdate)), '%Y')+0 < 15 ;");
+		        .createSQLQuery(sqlQuery );
 		return allKidsDOBQuery.list();
 	}
 	

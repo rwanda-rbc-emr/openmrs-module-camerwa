@@ -139,7 +139,7 @@ public class CamerwaFormController extends AbstractController {
 	        
         
        log.info("patientsUnderDrugpatientsUnde patientsUnderDrug   patientsUnderDrug patientsUnderDrug  rDrugpatientsUnderDrugpatientsUnderDrug"+patientsUnderDrug+"  dateFormatedNew  "+dateFormatedNew+"dateFormatedLimite "+dateFormatedLimite);
-        patientsUnderDrug=camerwaService.getPatientsUnderDrug(dateFormatedNew,dateFormatedLimite);
+        patientsUnderDrug = camerwaService.getPatientsUnderDrug(dateFormatedNew,dateFormatedLimite);
         
         // getting all locations
        log.info("locations  "+camerwaService.getLocations());
